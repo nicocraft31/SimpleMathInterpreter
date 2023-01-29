@@ -39,11 +39,11 @@ Expression* Parser::parse_expression(Token* token)
 BinaryExpression* Parser::parse_binary(Token* token)
 {
 	NumberExpression* left = parse_number(token);
-	VERIFY(left, "Expected number (int, float, or double), but got: ", m_current_token);
+	VERIFY_NULL(left, "Expected number (int, float, or double), but got: ", m_current_token);
 	BinaryExpressionType binary_op = parse_binary_op();
-	VERIFY(binary_op, "Expected valid binary_op, but got: ", m_current_token);
+	VERIFY_NULL(binary_op, "Expected valid binary_op, but got: ", m_current_token);
 	BinaryNumberExpression* right = parse_binary_number(peek_next());
-	VERIFY(right, "Expected number or binary expression, but got: ", m_current_token);
+	VERIFY_NULL(right, "Expected number or binary expression, but got: ", m_current_token);
 
 	BinaryExpression* expression = EXPRESSION_NEW(BinaryExpression(binary_op, (BinaryNumberExpression*)left, (BinaryNumberExpression*)right));
 	expression->type = binary_op;

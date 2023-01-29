@@ -31,8 +31,10 @@ public:
 	NumberExpression* ast_finished_number_expression(NumberExpression* number);
 	InterpreterOperation* ast_finished_binary_op_expression(BinaryExpression* binary);
 	BinaryNumberExpression* ast_finished_binary_expression(BinaryExpression* binary);
-	BinaryNumberExpression* ast_finished_binary_expression(BinaryNumberExpression* binary_number);
+	int ast_finished_compute_expression(BinaryNumberExpression* left, BinaryNumberExpression* right, BinaryExpressionType binary_op);
 private:
 	Parser* m_parser;
+	uint32_t m_expression_index = 0;
+	uint32_t m_expression_length = 0;
 private:
 };

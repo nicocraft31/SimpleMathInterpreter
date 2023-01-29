@@ -69,7 +69,7 @@ public:
 };
 
 #define EXPRESSION_NEW(x) new x
-#define VERIFY(x, msg, token) if(x == 0) {error(msg, token);}
+#define VERIFY_NULL(x, msg, token) if(x == 0) {error(msg, token);}
 #define EXPRESSION_PUSH(x, type) type* expression= x; m_expressions.push_back(expression)
 #define EXPRESSION_PUSH(x) m_expressions.push_back(x)
 class Parser

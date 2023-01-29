@@ -2,7 +2,7 @@
 #include <iostream>
 
 Interpreter::Interpreter(Parser* parser) :
-	m_parser(parser)
+	m_parser(parser), m_expression_length(parser->expressions().size())
 {
 }
 
@@ -10,11 +10,9 @@ void Interpreter::start_interpreting()
 {
 	std::vector<Expression*>& expressions = m_parser->expressions();
 
-	for (int i = 0; i < expressions.size(); i++)
+	for (m_expression_index = 0; m_expression_index < m_expression_length; m_expression_index++)
 	{
-		Expression* expression = expressions[i];
-
-		std::cout << i << std::endl;
+		Expression* expression = expressions[m_expression_index];
 
 		InterpreterOperation* operation = ast_finished_expression(expression);
 	}
@@ -49,82 +47,61 @@ BinaryNumberExpression* Interpreter::ast_finished_binary_expression(BinaryExpres
 
 	BinaryNumberExpression* left = ast_finished_binary_expression((BinaryExpression*)binary_left);
 	InterpreterOperation* binary_op = ast_finished_binary_op_expression(binary);
+
+	BinaryNumberExpression* next_binary_expression = (BinaryNumberExpression*)binary_right;
+	ast_finished_compute_expression(left, next_binary_expression, binary->type);
+
 	BinaryNumberExpression* right = ast_finished_binary_expression((BinaryExpression*)binary_right);
 	if (!left || !right)
 		return binary;
-	
-	std::cout << "left: " <<((NumberExpression*)left)->number->value.int_value << std::endl;
-	if (right->binary_type() == BINARY_NUMBER) std::cout << "right: " << 
-		((NumberExpression*)right)->number->value.int_value << std::endl;
-	else 
-	{
-		BinaryExpression* right_left = (BinaryExpression*)((BinaryExpression*)right)->left;
-
-		std::cout << "right: " << ((NumberExpression*)right_left)->number->value.int_value << std::endl;
-	}
-
-	
 
 	return binary;
+}
 
+int Interpreter::ast_finished_compute_expression(BinaryNumberExpression* left, BinaryNumberExpression* right, BinaryExpressionType binary_op)
+{
+	NumberExpression* number_left = (NumberExpression*)left;
+	NumberExpression* number_right = nullptr;
 
-	BinaryExpression* binary_right_right = (BinaryExpression*)right;
-	if(left->binary_type() == BINARY_NUMBER && (right->binary_type() == BINARY_NUMBER || binary_right_right->right->binary_type() == BINARY_NUMBER))
+	BinaryExpression* binary_right = (BinaryExpression*)right;
+
+	if (right->binary_type() == BINARY_NUMBER)
+		number_right = (NumberExpression*)right;
+	else
+		number_right = (NumberExpression*) binary_right->left;
+
+	int left_int = number_left->number->value.int_value;
+	int right_int = number_right->number->value.int_value;
+
+	int result = 0;
+
+	switch (binary_op)
 	{
-		int left_int = ((NumberExpression*)left)->number->value.int_value;
-		int right_int = 0;
-
-		if (right->binary_type() == BINARY_NUMBER)
-		{
-			NumberExpression* number = (NumberExpression*)right;
-
-			std::cout << "right is number" << std::endl;
-			right_int = number->number->value.int_value;
-		}
-		else if(binary_right_right->right->binary_type() == BINARY_NUMBER)
-		{
-			NumberExpression* number = (NumberExpression*)binary_right_right->right;
-
-			std::cout << "right of right is number" << std::endl;
-			right_int = number->number->value.int_value;
-		}
-		else
-		{
-			error("Couldn't set right_int at ast_finished_binary_expression() in interpreter.cpp", nullptr);
-		}
-
-		std::cout << "left: " << left_int << " right:" << right_int << std::endl;
-
-		int result = 0;
-
-		switch (binary_op->type)
-		{
-		case OPERATION_DIVIDE:
-		{
-			result = left_int / right_int;
-			break;
-		}
-		case OPERATION_MULTIPLY:
-		{
-			result = left_int * right_int;
-			break;
-		}
-		case OPERATION_PLUS:
-		{
-			result = left_int + right_int;
-			break;
-		}
-		case OPERATION_MINUS:
-		{
-			result = left_int - right_int;
-			break;
-		}
-		}
-
-		std::cout << "result: " << result << std::endl;
+	case OPERATION_DIVIDE:
+	{
+		result = left_int / right_int;
+		break;
+	}
+	case OPERATION_MULTIPLY:
+	{
+		result = left_int * right_int;
+		break;
+	}
+	case OPERATION_PLUS:
+	{
+		result = left_int + right_int;
+		break;
+	}
+	case OPERATION_MINUS:
+	{
+		result = left_int - right_int;
+		break;
+	}
 	}
 
-	return binary;
+	std::cout << "result: " << result << std::endl;
+
+	return result;
 }
 
 InterpreterOperation* Interpreter::ast_finished_binary_op_expression(BinaryExpression* binary)

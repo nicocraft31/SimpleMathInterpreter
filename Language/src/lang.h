@@ -13,3 +13,5 @@ struct Language
 void __error(const char* msg, Token* token);
 
 #define error(x, token) __error(x, token)
+#define verify(x) if(!(x)) std::cout << "Couldn't met condition: " << "x" << std::endl; exit(1)
+#define assert(x) if(x) std::cout << "Assertion failed: " << "x" << std::endl; exit(1)
