@@ -1,4 +1,0 @@
-﻿  main.cpp
-E:\Dev\C++\Language\Language\src\parser.h(75,1): warning C4005: 'EXPRESSION_PUSH': macro redefinition
-E:\Dev\C++\Language\Language\src\parser.h(74): message : see previous definition of 'EXPRESSION_PUSH'
-  Language.vcxproj -> E:\Dev\C++\Language\x64\Debug\Language.exe
