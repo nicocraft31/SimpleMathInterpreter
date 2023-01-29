@@ -36,11 +36,10 @@ std::string read_from_file(const char* path)
 
 int main(void)
 {
-	const char* path_c = "E:/Dev/C++/Language/Language/res/test.lang";
-	std::string str = read_from_file(path_c);
-	std::string path(path_c);
+	const char* filepath = "E:/Dev/C++/Language/Language/res/test.lang";
+	std::string file = read_from_file(filepath);
 
-	Lexer* lexer = new Lexer(str);
+	Lexer* lexer = new Lexer(file);
 	lexer->start_lexing();
 
 	Parser* parser = new Parser(lexer);

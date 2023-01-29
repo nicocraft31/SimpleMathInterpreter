@@ -25,9 +25,7 @@ void Parser::start_parsing()
 	for (int i = 0; i < m_expressions.size(); i++)
 	{
 		Expression* expression = m_expressions[i];
-
-		//std::cout << expression->expression_type() << std::endl;
-
+	
 		parse_finished_expression(expression);
 	}
 }
