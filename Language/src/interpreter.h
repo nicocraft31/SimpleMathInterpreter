@@ -31,6 +31,7 @@ public:
 	NumberExpression* ast_finished_number_expression(NumberExpression* number);
 	InterpreterOperation* ast_finished_binary_op_expression(BinaryExpression* binary);
 	BinaryNumberExpression* ast_finished_binary_expression(BinaryExpression* binary);
+	BinaryNumberExpression* ast_finished_binary_expression(BinaryNumberExpression* binary_number);
 private:
 	Parser* m_parser;
 private:

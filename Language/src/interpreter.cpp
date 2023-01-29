@@ -53,6 +53,21 @@ BinaryNumberExpression* Interpreter::ast_finished_binary_expression(BinaryExpres
 	if (!left || !right)
 		return binary;
 	
+	std::cout << "left: " <<((NumberExpression*)left)->number->value.int_value << std::endl;
+	if (right->binary_type() == BINARY_NUMBER) std::cout << "right: " << 
+		((NumberExpression*)right)->number->value.int_value << std::endl;
+	else 
+	{
+		BinaryExpression* right_left = (BinaryExpression*)((BinaryExpression*)right)->left;
+
+		std::cout << "right: " << ((NumberExpression*)right_left)->number->value.int_value << std::endl;
+	}
+
+	
+
+	return binary;
+
+
 	BinaryExpression* binary_right_right = (BinaryExpression*)right;
 	if(left->binary_type() == BINARY_NUMBER && (right->binary_type() == BINARY_NUMBER || binary_right_right->right->binary_type() == BINARY_NUMBER))
 	{
