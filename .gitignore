@@ -5,6 +5,8 @@ x86/Debug
 Language/x64
 Language/x86
 
+.vs
+
 *.d
 
 *.slo
