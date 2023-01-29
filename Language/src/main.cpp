@@ -46,6 +46,7 @@ int main(void)
 	parser->start_parsing();
 
 	Interpreter* interpreter = new Interpreter(parser);
+	interpreter->start_interpreting();
 
 	return 0;
 }

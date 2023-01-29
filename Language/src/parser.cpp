@@ -21,67 +21,6 @@ void Parser::start_parsing()
 		if (token->type == TOKEN_EOF)
 			break;
 	}
-
-	for (int i = 0; i < m_expressions.size(); i++)
-	{
-		Expression* expression = m_expressions[i];
-	
-		parse_finished_expression(expression);
-	}
-}
-
-void Parser::parse_finished_expression(Expression* expression)
-{
-	switch (expression->expression_type())
-	{
-	case EXPRESSION_BINARY:
-	{
-		parse_finished_binary_expression((BinaryExpression*)expression);
-		return;
-	}
-	}
-}
-
-void Parser::parse_finished_binary_expression(BinaryExpression* binary)
-{
-	switch (binary->binary_type())
-	{
-	case BINARY_NUMBER:
-	{
-		parse_finished_number_expression((NumberExpression*)binary);
-		return;
-	}
-	}
-
-	BinaryNumberExpression* left = binary->left;
-	BinaryNumberExpression* right = binary->right;
-
-	parse_finished_binary_expression((BinaryExpression*)left);
-	parse_finished_binary_op_expression(binary);
-	parse_finished_binary_expression((BinaryExpression*)right);
-}
-
-void Parser::parse_finished_binary_op_expression(BinaryExpression* binary)
-{
-	std::cout << "BinaryOp: " << binary->get_str_from_type() << std::endl;
-}
-
-void Parser::parse_finished_number_expression(NumberExpression* number)
-{
-	Token* token = number->number;
-	std::cout << "Number: " << token->get_str_from_type() << " ";
-	if (token->type == TOKEN_INT)
-	{
-		std::cout << token->value.int_value << std::endl;
-	}
-	else if(token->type == TOKEN_FLOAT)
-	{
-		std::cout << token->value.float_value << std::endl;
-	}
-	else
-	{
-		std::cout << token->value.double_value << std::endl;
-	}
 }
 
 Expression* Parser::parse_expression(Token* token)
