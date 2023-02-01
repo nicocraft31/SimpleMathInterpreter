@@ -49,7 +49,7 @@ BinaryNumberExpression* Interpreter::ast_finished_binary_expression(BinaryExpres
 	InterpreterOperation* binary_op = ast_finished_binary_op_expression(binary);
 
 	BinaryNumberExpression* next_binary_expression = (BinaryNumberExpression*)binary_right;
-	ast_finished_compute_expression(left, next_binary_expression, binary->type);
+	ast_finished_compute_expression(left, next_binary_expression, binary_op);
 
 	BinaryNumberExpression* right = ast_finished_binary_expression((BinaryExpression*)binary_right);
 	if (!left || !right)
@@ -58,7 +58,7 @@ BinaryNumberExpression* Interpreter::ast_finished_binary_expression(BinaryExpres
 	return binary;
 }
 
-int Interpreter::ast_finished_compute_expression(BinaryNumberExpression* left, BinaryNumberExpression* right, BinaryExpressionType binary_op)
+int Interpreter::ast_finished_compute_expression(BinaryNumberExpression* left, BinaryNumberExpression* right, InterpreterOperation* binary_op)
 {
 	NumberExpression* number_left = (NumberExpression*)left;
 	NumberExpression* number_right = nullptr;
@@ -75,7 +75,7 @@ int Interpreter::ast_finished_compute_expression(BinaryNumberExpression* left, B
 
 	int result = 0;
 
-	switch (binary_op)
+	switch (binary_op->type)
 	{
 	case OPERATION_DIVIDE:
 	{
