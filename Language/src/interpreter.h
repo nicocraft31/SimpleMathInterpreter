@@ -28,13 +28,14 @@ public:
 	void start_interpreting();
 
 	InterpreterOperation* ast_finished_expression(Expression* expression);
-	NumberExpression* ast_finished_number_expression(NumberExpression* number);
-	InterpreterOperation* ast_finished_binary_op_expression(BinaryExpression* binary);
-	BinaryNumberExpression* ast_finished_binary_expression(BinaryExpression* binary);
-	int ast_finished_compute_expression(BinaryNumberExpression* left, BinaryNumberExpression* right, InterpreterOperation* binary_op);
 private:
 	Parser* m_parser;
 	uint32_t m_expression_index = 0;
 	uint32_t m_expression_length = 0;
+	bool m_is_parsing_binary = false;
 private:
+	NumberExpression* ast_finished_number_expression(NumberExpression* number);
+	InterpreterOperation* ast_finished_binary_op_expression(BinaryExpression* binary);
+	BinaryNumberExpression* ast_finished_binary_expression(BinaryExpression* binary);
+	int ast_finished_compute_expression(BinaryNumberExpression* left, BinaryNumberExpression* right, InterpreterOperation* binary_op);
 };

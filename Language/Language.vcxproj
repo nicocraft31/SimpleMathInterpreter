@@ -24,6 +24,7 @@
     <ProjectGuid>{bba72166-26d2-4cc1-83a7-cf6ee1fad414}</ProjectGuid>
     <RootNamespace>Language</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SimpleMathInterpreter</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
