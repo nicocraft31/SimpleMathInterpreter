@@ -39,14 +39,14 @@ int main(void)
 	const char* filepath = "E:/Dev/C++/Language/Language/res/test.lang";
 	std::string file = read_from_file(filepath);
 
-	Lexer* lexer = new Lexer(file);
-	lexer->start_lexing();
+	Lexer lexer = Lexer(file);
+	lexer.start_lexing();
 
-	Parser* parser = new Parser(lexer);
-	parser->start_parsing();
+	Parser parser = Parser(&lexer);
+	parser.start_parsing();
 
-	Interpreter* interpreter = new Interpreter(parser);
-	interpreter->start_interpreting();
+	Interpreter interpreter = Interpreter(&parser);
+	interpreter.start_interpreting();
 
 	return 0;
 }

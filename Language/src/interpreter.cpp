@@ -10,11 +10,14 @@ void Interpreter::start_interpreting()
 {
 	std::vector<Expression*>& expressions = m_parser->expressions();
 
+	InterpreterOperation* last_operation = nullptr;
+
 	for (m_expression_index = 0; m_expression_index < m_expression_length; m_expression_index++)
 	{
 		Expression* expression = expressions[m_expression_index];
 
 		InterpreterOperation* operation = ast_finished_expression(expression);
+		last_operation = operation;
 	}
 }
 
@@ -34,6 +37,9 @@ InterpreterOperation* Interpreter::ast_finished_expression(Expression* expressio
 
 BinaryNumberExpression* Interpreter::ast_finished_binary_expression(BinaryExpression* binary)
 {
+	if (!m_parsing_binary)
+		m_parsing_binary = true;
+
 	switch (binary->binary_type())
 	{
 	case BINARY_NUMBER:
@@ -49,9 +55,14 @@ BinaryNumberExpression* Interpreter::ast_finished_binary_expression(BinaryExpres
 	InterpreterOperation* binary_op = ast_finished_binary_op_expression(binary);
 
 	BinaryNumberExpression* next_binary_expression = (BinaryNumberExpression*)binary_right;
-	ast_finished_compute_expression(left, next_binary_expression, binary_op);
+	if(m_parsing_binary) 
+		ast_finished_compute_expression(left, next_binary_expression, binary_op);
 
 	BinaryNumberExpression* right = ast_finished_binary_expression((BinaryExpression*)binary_right);
+
+	if (m_parsing_binary)
+		m_parsing_binary = false;
+
 	if (!left || !right)
 		return binary;
 

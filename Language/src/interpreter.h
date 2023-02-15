@@ -32,7 +32,7 @@ private:
 	Parser* m_parser;
 	uint32_t m_expression_index = 0;
 	uint32_t m_expression_length = 0;
-	bool m_is_parsing_binary = false;
+	bool m_parsing_binary = false;
 private:
 	NumberExpression* ast_finished_number_expression(NumberExpression* number);
 	InterpreterOperation* ast_finished_binary_op_expression(BinaryExpression* binary);

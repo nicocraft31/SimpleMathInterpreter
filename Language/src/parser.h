@@ -79,7 +79,7 @@ public:
 
 	void start_parsing();
 
-	std::vector<Expression*>& expressions() { return m_expressions; };
+	std::vector<Expression*>& expressions()  { return m_expressions; };
 private:
 	Lexer* m_lexer;
 	uint32_t m_current_token_index;
@@ -96,8 +96,8 @@ private:
 	BinaryExpressionType parse_binary_op();
 	NumberExpression* parse_number(Token* token);
 	
-	bool is_token_number(Token* token) { TokenType t = token->type; return t == TOKEN_INT || t == TOKEN_FLOAT || t == TOKEN_DOUBLE; };
-	bool is_token_binary(Token* token) { TokenType t = token->type; return t == TOKEN_DIVIDE || t == TOKEN_MINUS || t == TOKEN_PLUS || t == TOKEN_MULTIPLY; }
+	bool is_token_number(Token* token) const { TokenType t = token->type; return t == TOKEN_INT || t == TOKEN_FLOAT || t == TOKEN_DOUBLE; };
+	bool is_token_binary(Token* token) const { TokenType t = token->type; return t == TOKEN_DIVIDE || t == TOKEN_MINUS || t == TOKEN_PLUS || t == TOKEN_MULTIPLY; }
 
 	Token* peek_not_consume() { return m_current_no_consume_token = m_lexer->peek_no_consume(); };
 	Token* peek_next() { return m_current_token = m_lexer->peek_next(); };
