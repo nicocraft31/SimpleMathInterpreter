@@ -9,4 +9,4 @@ This is a project for me to learn. So, in the future, I will make a real program
 
 # Warning
 
-DO NOT ATTEMP TO BUILD THIS. Not now, because I just commit things for not to lose progress due to power outage or something.
+DO NOT ATTEMP TO BUILD THIS. Not now, because I just commit things for not to lose progress due to power outage or something...
